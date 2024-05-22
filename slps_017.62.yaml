@@ -1,0 +1,60 @@
+name: SLPS_017.62
+sha1: 116d895763ebef141b4e2c3c90c1b227d257b804
+options:
+  basename: slps_017.62
+  target_path: SLPS_017.62
+  base_path: .
+  platform: psx
+  compiler: GCC
+
+  # asm_path: asm
+  # src_path: src
+  # build_path: build
+  # create_asm_dependencies: True
+
+  ld_script_path: slps_017.62.ld
+
+  find_file_boundaries: yes
+  gp_value: 0x800954C4
+
+  o_as_suffix: True
+  use_legacy_include_asm: False
+
+  asm_function_macro: glabel
+  asm_jtbl_label_macro: jlabel
+  asm_data_macro: dlabel
+
+  section_order: [".rodata", ".text", ".data", ".bss"]
+  # auto_all_sections: [".data", ".rodata", ".bss"]
+
+  symbol_addrs_path:
+    - symbol_addrs.txt
+  reloc_addrs_path:
+    - reloc_addrs.txt
+
+  # undefined_funcs_auto_path: undefined_funcs_auto.txt
+  # undefined_syms_auto_path: undefined_syms_auto.txt
+
+  extensions_path: tools/splat_ext
+
+  subalign: 2
+
+  string_encoding: ASCII
+  data_string_encoding: ASCII
+  rodata_string_guesser_level: 2
+  data_string_guesser_level: 2
+segments:
+  - name: header
+    type: header
+    start: 0x0
+
+  - name: main
+    type: code
+    start: 0x800
+    vram: 0x80010000
+    # bss_size: Please fill out this value when you figure out the bss size
+    subsegments:
+      - [0x800, rodata, 800]
+      - [0x3960, asm, 3960] # estimated
+      - [0x62CD0, data, 62CD0] # estimated
+  - [0x86000]
